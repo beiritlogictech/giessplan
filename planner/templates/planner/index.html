@@ -39,14 +39,15 @@
 <body>
     <div class="bg-shape bg-1"></div>
     <div class="bg-shape bg-2"></div>
+    <main id="main-content" role="main">
     <div class="page-shell">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-xl-8">
                     <div class="card p-4 p-md-5 shadow-lg rounded-4">
                         <div class="text-center mb-4">
-                            <h3 class="mb-1 text-primary">💧 Gießplan &amp; Pflege-Checker</h3>
-                            <p class="text-muted mb-0">Berechne Gießmenge, Spülmenge, Intervall und Düngerzugabe
+                            <h3 class="mb-1 c-primary">💧 Gießplan &amp; Pflege-Checker</h3>
+                            <p class="c-muted mb-0">Berechne Gießmenge, Spülmenge, Intervall und Düngerzugabe
                                 basierend auf Topfgröße &amp; Lampenleistung.</p>
                         </div>
 
@@ -62,7 +63,7 @@
                             </div>
 
                             <div class="col-12 d-flex justify-content-between flex-wrap gap-2 action-row">
-                                <div class="text-muted small">Speichert deine letzten Eingaben automatisch.</div>
+                                <div class="c-muted small">Speichert deine letzten Eingaben automatisch.</div>
                                 <div class="text-end btn-group-responsive">
                                     <button id="calc-btn" class="btn btn-primary">Berechnen</button>
                                     <button id="reset-btn" class="btn btn-outline-secondary">Zurücksetzen</button>
@@ -74,8 +75,8 @@
 
                         <div class="weather-section mb-4">
                             <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-2">
-                                <h5 class="mb-0 text-primary">Wetter-Check</h5>
-                                <span class="badge bg-soft-primary text-primary">Lokale Empfehlung</span>
+                                <h4 class="mb-0 c-primary">Wetter-Check</h4>
+                                <span class="badge badge-soft-primary">Lokale Empfehlung</span>
                             </div>
                             <div class="row g-2 align-items-end">
                                 <div class="col-md-6">
@@ -90,11 +91,11 @@
                                 <div class="d-flex justify-content-between flex-wrap gap-3">
                                     <div>
                                         <div class="fw-semibold" id="weather-status">Noch keine Daten geladen.</div>
-                                        <div class="text-muted small" id="weather-meta">Bitte Ort eingeben und laden.</div>
+                                        <div class="c-muted small" id="weather-meta">Bitte Ort eingeben und laden.</div>
                                     </div>
                                     <div class="text-md-end">
-                                        <div class="fw-semibold text-success" id="weather-suggestion">—</div>
-                                        <div class="text-muted small">Aktionsvorschlag</div>
+                                        <div class="fw-semibold tone-success" id="weather-suggestion">—</div>
+                                        <div class="c-muted small">Aktionsvorschlag</div>
                                     </div>
                                 </div>
                             </div>
@@ -117,11 +118,11 @@
 
                         <div class="nutrient-section mt-4">
                             <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-2">
-                                <h5 class="mb-0 text-primary">BIOBIZZ Nährstoffe</h5>
-                                <span class="badge bg-soft-primary text-primary">Standard-Dosierung in ml/L</span>
+                                <h4 class="mb-0 c-primary">BIOBIZZ Nährstoffe</h4>
+                                <span class="badge badge-soft-primary">Standard-Dosierung in ml/L</span>
                             </div>
-                            <p class="text-muted small mb-3">Berechnet auf Basis deiner Gießmenge pro Vorgang.</p>
-                            <ul class="text-muted small ps-3 mb-4">
+                            <p class="c-muted small mb-3">Berechnet auf Basis deiner Gießmenge pro Vorgang.</p>
+                            <ul class="c-muted small ps-3 mb-4">
                                 <li>Werte gelten pro Liter Gießwasser; erst Dünger dosieren, dann pH prüfen.</li>
                                 <li>Bei jedem regulären Gießen nutzen; bei sehr feuchtem Medium eine Runde aussetzen.</li>
                                 <li>Bei sichtbarer Überdüngung auf klares Wasser wechseln und Spülmenge nutzen.</li>
@@ -133,12 +134,12 @@
                                     <div class="d-flex justify-content-between align-items-start">
                                         <div>
                                             <div class="fw-semibold">BIOBIZZ BioGrow</div>
-                                            <div class="text-muted small">Standard: <span class="dose">2 ml/L</span></div>
-                                            <div class="text-muted xsmall mt-1">Wuchs + sanft in Blüte weiterfahren.</div>
+                                            <div class="c-muted small">Standard: <span class="dose">2 ml/L</span></div>
+                                            <div class="c-muted xsmall mt-1">Wuchs + sanft in Blüte weiterfahren.</div>
                                         </div>
                                         <div class="text-end">
                                             <div class="fs-5 fw-semibold" id="grow-amount">–</div>
-                                            <div class="text-muted small">pro Gießvorgang</div>
+                                            <div class="c-muted small">pro Gießvorgang</div>
                                         </div>
                                     </div>
                                 </div>
@@ -147,12 +148,12 @@
                                     <div class="d-flex justify-content-between align-items-start">
                                         <div>
                                             <div class="fw-semibold">BIOBIZZ CalMag</div>
-                                            <div class="text-muted small">Standard: <span class="dose">1 ml/L</span></div>
-                                            <div class="text-muted xsmall mt-1">Immer bei weichem Wasser/LED.</div>
+                                            <div class="c-muted small">Standard: <span class="dose">1 ml/L</span></div>
+                                            <div class="c-muted xsmall mt-1">Immer bei weichem Wasser/LED.</div>
                                         </div>
                                         <div class="text-end">
                                             <div class="fs-5 fw-semibold" id="calmag-amount">–</div>
-                                            <div class="text-muted small">pro Gießvorgang</div>
+                                            <div class="c-muted small">pro Gießvorgang</div>
                                         </div>
                                     </div>
                                 </div>
@@ -161,12 +162,12 @@
                                     <div class="d-flex justify-content-between align-items-start">
                                         <div>
                                             <div class="fw-semibold">BIOBIZZ TopMax</div>
-                                            <div class="text-muted small">Standard: <span class="dose">1 ml/L</span></div>
-                                            <div class="text-muted xsmall mt-1">Ab Blüte für Blüten-/Harzbildung.</div>
+                                            <div class="c-muted small">Standard: <span class="dose">1 ml/L</span></div>
+                                            <div class="c-muted xsmall mt-1">Ab Blüte für Blüten-/Harzbildung.</div>
                                         </div>
                                         <div class="text-end">
                                             <div class="fs-5 fw-semibold" id="topmax-amount">–</div>
-                                            <div class="text-muted small">pro Gießvorgang</div>
+                                            <div class="c-muted small">pro Gießvorgang</div>
                                         </div>
                                     </div>
                                 </div>
@@ -175,12 +176,12 @@
                                     <div class="d-flex justify-content-between align-items-start">
                                         <div>
                                             <div class="fw-semibold">BIOBIZZ BioBloom</div>
-                                            <div class="text-muted small">Standard: <span class="dose">2 ml/L</span></div>
-                                            <div class="text-muted xsmall mt-1">Ab Stretch/Blüte, steigert Blüte.</div>
+                                            <div class="c-muted small">Standard: <span class="dose">2 ml/L</span></div>
+                                            <div class="c-muted xsmall mt-1">Ab Stretch/Blüte, steigert Blüte.</div>
                                         </div>
                                         <div class="text-end">
                                             <div class="fs-5 fw-semibold" id="biobloom-amount">–</div>
-                                            <div class="text-muted small">pro Gießvorgang</div>
+                                            <div class="c-muted small">pro Gießvorgang</div>
                                         </div>
                                     </div>
                                 </div>
@@ -191,6 +192,7 @@
             </div>
         </div>
     </div>
+    </main>
 
     <script src="{% static 'planner/main.js' %}"></script>
 </body>

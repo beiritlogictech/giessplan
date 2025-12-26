@@ -126,7 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
     dom.weatherStatus.textContent = "Lade Wetterdaten...";
     dom.weatherMeta.textContent = city;
     dom.weatherSuggestion.textContent = "—";
-    dom.weatherSuggestion.classList.remove("text-success", "text-warning");
+    dom.weatherSuggestion.classList.remove("tone-success", "tone-warning");
 
     try {
       const response = await fetch(`/api/weather/?city=${encodeURIComponent(city)}`);
@@ -147,8 +147,8 @@ document.addEventListener("DOMContentLoaded", () => {
       dom.weatherStatus.textContent = `${data.temp.toFixed(1)}°C, ${data.description}`;
       dom.weatherMeta.textContent = `Luftfeuchte ${data.humidity}% · Wind ${data.wind_kmh.toFixed(1)} km/h`;
       dom.weatherSuggestion.textContent = data.suggestion?.text || "—";
-      if (data.suggestion?.tone === "ok") dom.weatherSuggestion.classList.add("text-success");
-      if (data.suggestion?.tone === "warn") dom.weatherSuggestion.classList.add("text-warning");
+      if (data.suggestion?.tone === "ok") dom.weatherSuggestion.classList.add("tone-success");
+      if (data.suggestion?.tone === "warn") dom.weatherSuggestion.classList.add("tone-warning");
 
       storage.saveCity(city);
     } catch (err) {

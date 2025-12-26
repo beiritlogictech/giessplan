@@ -14,6 +14,7 @@
       --primary: #2563eb;
       --bg: #f8fafc;
       --card: #ffffff;
+      --muted: #475569;
     }
     body {
       margin: 0;
@@ -40,14 +41,14 @@
     }
     p {
       margin: 6px 0;
-      color: #475569;
+      color: var(--muted);
     }
     ul {
       text-align: left;
       margin: 12px auto;
       padding-left: 18px;
       max-width: 360px;
-      color: #475569;
+      color: var(--muted);
       line-height: 1.5;
     }
     .pill {
@@ -70,6 +71,47 @@
     }
     .contact a:hover {
       text-decoration: underline;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --primary: #60a5fa;
+        --bg: #0b1220;
+        --card: #0f172a;
+        --muted: #cbd5e1;
+      }
+      body {
+        color-scheme: dark;
+        background: radial-gradient(circle at 20% 20%, rgba(96, 165, 250, 0.12) 0, transparent 30%),
+          radial-gradient(circle at 80% 10%, rgba(59, 130, 246, 0.14) 0, transparent 25%),
+          linear-gradient(180deg, #0b1220 0%, #0f172a 100%);
+        color: #e2e8f0;
+      }
+      .card {
+        background: var(--card);
+        border-color: #1f2937;
+        box-shadow: 0 14px 32px rgba(0, 0, 0, 0.45);
+      }
+      h1 {
+        color: var(--primary);
+      }
+      p,
+      ul {
+        color: var(--muted);
+      }
+      .pill {
+        background: rgba(96, 165, 250, 0.14);
+        color: #dbeafe;
+      }
+      .contact {
+        color: #e2e8f0;
+      }
+      .contact a {
+        color: var(--primary);
+      }
+      .contact a:hover {
+        color: #93c5fd;
+      }
     }
   </style>
 </head>
