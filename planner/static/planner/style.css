@@ -61,7 +61,7 @@ body {
 }
 
 .bg-shape {
-  position: absolute;
+  position: fixed;
   width: clamp(20rem, 30vw, 32.5rem);
   height: clamp(20rem, 30vw, 32.5rem);
   border-radius: 50%;
@@ -227,24 +227,27 @@ body {
   z-index: 1;
   margin: 0;
   padding: 0;
-  display: flex;
-  justify-content: center;
+  display: block;
 }
 
 .layout-row {
   display: grid;
-  grid-template-columns: clamp(12rem, 18vw, 15rem) minmax(30rem, 1.6fr) clamp(
-      12rem,
+  grid-template-columns: clamp(13rem, 18vw, 16rem) minmax(34rem, 1.6fr) clamp(
+      13rem,
       18vw,
-      15rem
+      16rem
     );
   gap: clamp(1rem, 2vw, 1.5rem);
-  align-items: start;
+  align-items: stretch;
   grid-template-areas:
     "left main right"
     "wide wide wide";
   padding-inline: clamp(0.25rem, 1vw, 1rem);
-  width: min(115rem, 100%);
+  width: min(108rem, 100%);
+  max-width: 100%;
+  overflow: visible;
+  margin: 0 auto;
+  justify-items: stretch;
 }
 
 .layout-row > * {
@@ -337,6 +340,12 @@ body {
   display: grid;
   gap: 0.75rem;
   grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+}
+
+.card .row {
+  --bs-gutter-x: 1rem;
+  margin-left: 0;
+  margin-right: 0;
 }
 
 #results .result-row {
@@ -483,6 +492,7 @@ body {
 .wide-slot {
   grid-area: wide;
   margin-top: clamp(1rem, 2vw, 1.75rem);
+  align-self: stretch;
 }
 
 .wide-slot .card-wide {
@@ -512,7 +522,10 @@ body {
 
 @media (max-width: 75rem) {
   .layout-row {
-    grid-template-columns: minmax(11rem, 1fr) minmax(22rem, 1.8fr) minmax(11rem, 1fr);
+    grid-template-columns: minmax(11rem, 1fr) minmax(22rem, 1.8fr) minmax(
+        11rem,
+        1fr
+      );
     gap: clamp(0.875rem, 1.8vw, 1.25rem);
     grid-template-areas:
       "left main right"
@@ -524,7 +537,7 @@ body {
   }
 }
 
-@media (max-width: 60rem) {
+@media (max-width: 48rem) {
   .layout-row {
     grid-template-columns: 1fr;
     grid-template-areas:
@@ -532,15 +545,58 @@ body {
       "wide"
       "left"
       "right";
+    max-height: none;
+    overflow: visible;
+    padding-inline: clamp(0.75rem, 5vw, 1.5rem);
+    width: 100%;
+    margin: 0 auto;
   }
 
   .side-left,
   .side-right {
     margin-top: 0.5rem;
   }
+
+  .card .row {
+    --bs-gutter-x: 0.75rem;
+  }
+
+}
+
+@media (max-width: 48rem) {
+  body {
+    max-height: none;
+    overflow-y: auto;
+  }
+}
+
+@media (min-width: 48.0625rem) {
+  body {
+    max-height: none;
+    overflow-y: auto;
+  }
+
+  .layout-row {
+    max-height: none;
+    overflow: visible;
+  }
+
+  .page-shell {
+    max-height: none;
+  }
 }
 
 @media (min-width: 75rem) {
+  .layout-row {
+    grid-template-columns: clamp(15rem, 17vw, 18rem) minmax(42rem, 1.8fr) clamp(
+        15rem,
+        17vw,
+        18rem
+      );
+    gap: clamp(1.25rem, 2vw, 2rem);
+    width: min(118rem, 100%);
+  }
+
   .card-stack {
     grid-template-columns: repeat(auto-fit, minmax(23.75rem, 1fr));
     align-items: start;
@@ -564,12 +620,6 @@ body {
 }
 
 @media (max-width: 47.9375rem) {
-  body {
-    padding: 1rem;
-    overflow-x: hidden;
-    overflow-y: auto;
-  }
-
   .card-stack {
     display: block;
     height: auto;
@@ -609,5 +659,40 @@ body {
   .btn-group-responsive .btn {
     width: 100%;
     min-width: unset;
+  }
+}
+
+@media (max-width: 24rem) {
+  body {
+    padding: 0;
+  }
+
+  .layout-row {
+    padding-inline: 0;
+    gap: 0.5rem;
+    margin: 0 auto;
+    width: 100vw;
+    justify-items: stretch;
+  }
+
+  .card,
+  .side-card,
+  .card-wide {
+    border-radius: 0.75rem;
+    padding: 0.75rem;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .btn-group-responsive .btn {
+    padding-inline: 0.75rem;
+  }
+
+  .form-control {
+    min-height: 2.75rem;
+  }
+
+  .card-scroll {
+    max-height: 65vh;
   }
 }
