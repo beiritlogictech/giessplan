@@ -1,0 +1,48 @@
+.env
+planner/static/planner/env.js
+planner/migrations/
+__pycache__/
+*.pyc 
+instance/
+venv/
+.venv/
+node_modules/
+.python-version
+env.js
+.env.*
+.envrc
+.env.local
+.env.example
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Database
+db.sqlite3
+*.db
+
+# Static and media files
+/static/
+/media/
+staticfiles/
+
+# Logs
+*.log
+
+# Testing
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Build
+build/
+dist/
+*.egg-info/

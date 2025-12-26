@@ -122,6 +122,18 @@ body {
   padding: 18px 18px 6px;
 }
 
+.weather-section {
+  background: #f7faff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 18px;
+}
+
+.weather-card {
+  border: 1px solid #e2e8f0;
+  background: #fff;
+}
+
 .nutrient-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
