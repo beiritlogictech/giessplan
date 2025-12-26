@@ -42,5 +42,4 @@ Interaktive Gieß-/Dünger- und Wetter-Check-App (Bootstrap + Vanilla JS) mit se
 - Umgebungsvariablen: `OPENWEATHER_KEY` serverseitig setzen; `DJANGO_SECRET_KEY`, `DJANGO_DEBUG=0` für Prod.
 - Staticfiles: Für Produktion `python manage.py collectstatic` einplanen (aktuelles Setup nutzt App-Static).
 - GitHub Pages (statisch): `docs/index.html` zeigt eine „In Arbeit“-Seite. Pages auf Branch `main`, Folder `/docs` konfigurieren, bis das echte Deployment live ist.
-- Assets: Favicon unter `planner/static/planner/img/wassertropfen.svg` (Quelle: Pixabay – Motiv von OpenClipart-Vectors:
-  https://pixabay.com/de/users/openclipart-vectors-30363/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=2023258)
+- Assets: Favicon unter `planner/static/planner/img/wassertropfen.svg` (Quelle: Pixabay – Motiv von OpenClipart-Vectors: [https://pixabay.com/de/users/openclipart-vectors-30363/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=2023258](https://pixabay.com/de/users/openclipart-vectors-30363/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=2023258))
