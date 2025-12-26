@@ -160,10 +160,24 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   async function fetchWeather() {
-    const city = dom.cityInput.value.trim();
+    let city = dom.cityInput.value.trim();
     if (!city) {
-      alert("Bitte einen Ort/Stadt eingeben.");
-      return;
+      const modalInput = document.getElementById("modal-city-input");
+      const saveBtn = document.getElementById("modal-city-save");
+      const bsModal = new bootstrap.Modal(document.getElementById("modalCity"));
+      modalInput.value = "";
+      bsModal.show();
+      return new Promise((resolve) => {
+        const submit = () => {
+          city = modalInput.value.trim();
+          if (!city) return;
+          dom.cityInput.value = city;
+          bsModal.hide();
+          saveBtn.removeEventListener("click", submit);
+          resolve(fetchWeather());
+        };
+        saveBtn.addEventListener("click", submit);
+      });
     }
 
     dom.weatherStatus.textContent = "Lade Wetterdaten...";

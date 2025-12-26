@@ -299,6 +299,26 @@ body {
   color: #92400e;
 }
 
+.modal-content {
+  border-radius: 1rem;
+  border: 1px solid var(--card-border);
+  background: var(--card);
+}
+
+.modal-title {
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.modal-body label,
+.modal-body .c-muted {
+  color: var(--result-label);
+}
+
+.modal-body input::placeholder {
+  color: var(--muted);
+}
+
 .topbar-inner {
   display: flex;
   align-items: center;
