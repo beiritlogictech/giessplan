@@ -1,0 +1,45 @@
+{% extends "registration/base_auth.html" %}
+{% block title %}Registrieren{% endblock %}
+{% block header %}Account erstellen{% endblock %}
+{% block content %}
+<form method="post" novalidate>
+  {% csrf_token %}
+  {% if form.non_field_errors %}
+    <div class="prompt-inline mb-3">
+      <strong>Registrierung fehlgeschlagen.</strong><br>
+      Bitte Eingaben prüfen und erneut versuchen.
+      <ul class="mb-0 mt-2 ps-3">
+        {% for err in form.non_field_errors %}
+          <li>{{ err }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+  <div class="mb-3">
+    <label class="form-label" for="{{ form.username.id_for_label }}">Benutzername</label>
+    {{ form.username }}
+    {{ form.username.errors }}
+  </div>
+  <div class="mb-3">
+    <label class="form-label" for="{{ form.password1.id_for_label }}">Passwort</label>
+    <div class="pass-wrap">
+      {{ form.password1 }}
+      <span class="toggle-pass" data-target="{{ form.password1.id_for_label }}">👁️</span>
+    </div>
+    {{ form.password1.errors }}
+  </div>
+  <div class="mb-3">
+    <label class="form-label" for="{{ form.password2.id_for_label }}">Passwort (Wiederholung)</label>
+    <div class="pass-wrap">
+      {{ form.password2 }}
+      <span class="toggle-pass" data-target="{{ form.password2.id_for_label }}">👁️</span>
+    </div>
+    {{ form.password2.errors }}
+  </div>
+  <button type="submit" class="btn btn-primary w-100">Registrieren</button>
+  <div class="d-flex justify-content-between small mt-3">
+    <a href="{% url 'login' %}">Schon ein Konto? Login</a>
+    <a href="{% url 'password_reset' %}">Passwort vergessen</a>
+  </div>
+</form>
+{% endblock %}

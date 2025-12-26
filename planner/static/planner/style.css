@@ -230,6 +230,99 @@ body {
   display: block;
 }
 
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  padding: 0.5rem clamp(0.75rem, 3vw, 1.5rem);
+  background: linear-gradient(90deg, var(--surface) 0%, var(--surface-soft) 100%);
+  border-bottom: 0.0625rem solid var(--card-border);
+  backdrop-filter: blur(10px);
+}
+
+.auth-shell {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1.25rem, 4vw, 2.5rem);
+  background: radial-gradient(circle at 20% 20%, rgba(79, 139, 255, 0.18), transparent 38%),
+    radial-gradient(circle at 80% 10%, rgba(37, 99, 235, 0.12), transparent 32%),
+    linear-gradient(180deg, var(--surface) 0%, var(--surface-soft) 100%);
+}
+
+.auth-card {
+  max-width: 32rem;
+  width: min(90vw, 32rem);
+  margin: 0 auto;
+}
+
+.message-stack {
+  position: sticky;
+  top: 0.5rem;
+  z-index: 9;
+  display: grid;
+  gap: 0.5rem;
+  padding: 0.5rem clamp(0.75rem, 3vw, 1.5rem);
+}
+
+.flash {
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+  box-shadow: var(--row-shadow);
+}
+
+.flash-success {
+  background: #ecfdf3;
+  border-color: #bbf7d0;
+  color: #14532d;
+}
+
+.flash-error,
+.flash-danger {
+  background: #fef2f2;
+  border-color: #fecdd3;
+  color: #991b1b;
+}
+
+.flash-info {
+  background: #eff6ff;
+  border-color: #bfdbfe;
+  color: #1d4ed8;
+}
+
+.flash-warning {
+  background: #fff7ed;
+  border-color: #fed7aa;
+  color: #92400e;
+}
+
+.topbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  color: var(--result-label);
+}
+
+.brand {
+  font-weight: 800;
+  color: var(--primary);
+  letter-spacing: 0.02em;
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.topbar .btn {
+  font-weight: 700;
+}
+
 .layout-row {
   display: grid;
   grid-template-columns: clamp(13rem, 18vw, 16rem) minmax(34rem, 1.6fr) clamp(
@@ -673,6 +766,10 @@ body {
   .btn-group-responsive .btn {
     width: 100%;
     min-width: unset;
+  }
+
+  .topbar {
+    position: static;
   }
 }
 

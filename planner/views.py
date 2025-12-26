@@ -4,13 +4,30 @@ import urllib.error
 import urllib.parse
 import urllib.request
 
+from django.contrib import messages
+from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
 from django.http import JsonResponse, HttpResponseBadRequest
-from django.shortcuts import render
-from django.views.decorators.http import require_GET
+from django.shortcuts import render, redirect
+from django.views.decorators.http import require_GET, require_http_methods
+
+from .models import UserProfile
 
 
 def home(request):
-    return render(request, "planner/index.html")
+    profile_data = None
+    if request.user.is_authenticated:
+        profile, _ = UserProfile.objects.get_or_create(user=request.user)
+        profile_data = profile.as_dict()
+
+    context = {
+        "app_context_json": json.dumps(
+            {"isAuthenticated": request.user.is_authenticated, "profile": profile_data or {}},
+            ensure_ascii=False,
+        )
+    }
+    return render(request, "planner/index.html", context)
 
 
 def _suggest_action(temp, humidity, wind_kmh, description):
@@ -76,3 +93,55 @@ def weather(request):
             "suggestion": suggestion,
         }
     )
+
+
+@login_required
+@require_http_methods(["GET", "POST"])
+def preferences(request):
+    profile, _ = UserProfile.objects.get_or_create(user=request.user)
+
+    if request.method == "GET":
+        return JsonResponse(profile.as_dict())
+
+    try:
+        payload = json.loads(request.body.decode("utf-8"))
+    except (json.JSONDecodeError, UnicodeDecodeError):
+        return JsonResponse({"error": "Invalid JSON"}, status=400)
+
+    pot = payload.get("pot")
+    watts = payload.get("watts")
+    city = payload.get("city", "").strip()
+
+    if not isinstance(pot, (int, float)) or pot <= 0:
+        return JsonResponse({"error": "pot must be positive number"}, status=400)
+    if not isinstance(watts, (int, float)) or watts <= 0:
+        return JsonResponse({"error": "watts must be positive number"}, status=400)
+
+    profile.pot_volume = pot
+    profile.watts = watts
+    profile.city = city[:120]
+    profile.save(update_fields=["pot_volume", "watts", "city"])
+
+    return JsonResponse(profile.as_dict())
+
+
+@require_http_methods(["GET", "POST"])
+def signup(request):
+    if request.user.is_authenticated:
+        return redirect("home")
+
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            messages.success(request, "Registrierung erfolgreich. Du bist jetzt eingeloggt.")
+            return redirect("home")
+        else:
+            first_error = next(iter(form.errors.as_data().values()), None)
+            msg = first_error[0].messages[0] if first_error else "Bitte Eingaben prüfen."
+            messages.error(request, f"Registrierung fehlgeschlagen: {msg}")
+    else:
+        form = UserCreationForm()
+
+    return render(request, "registration/signup.html", {"form": form})

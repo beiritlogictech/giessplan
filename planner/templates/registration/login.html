@@ -1,0 +1,32 @@
+{% extends "registration/base_auth.html" %}
+{% block title %}Anmelden{% endblock %}
+{% block header %}Anmelden{% endblock %}
+{% block content %}
+<form method="post" novalidate>
+  {% csrf_token %}
+  {% if form.non_field_errors %}
+    <div class="prompt-inline mb-3">
+      <strong>Login fehlgeschlagen.</strong><br>
+      Bitte prüfe Benutzername und Passwort und versuche es erneut.
+    </div>
+  {% endif %}
+  <div class="mb-3">
+    <label class="form-label" for="{{ form.username.id_for_label }}">Benutzername</label>
+    {{ form.username }}
+    {{ form.username.errors }}
+  </div>
+  <div class="mb-3">
+    <label class="form-label" for="{{ form.password.id_for_label }}">Passwort</label>
+    <div class="pass-wrap">
+      {{ form.password }}
+      <span class="toggle-pass" data-target="{{ form.password.id_for_label }}">👁️</span>
+    </div>
+    {{ form.password.errors }}
+  </div>
+  <button type="submit" class="btn btn-primary w-100">Login</button>
+  <div class="d-flex justify-content-between small mt-3">
+    <a href="{% url 'password_reset' %}">Passwort vergessen?</a>
+    <a href="{% url 'signup' %}">Account erstellen</a>
+  </div>
+</form>
+{% endblock %}

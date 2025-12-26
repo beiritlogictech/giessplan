@@ -1,5 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const DEFAULTS = { pot: 40, watts: 200 };
+  const appContextEl = document.getElementById("app-context");
+  const appContext = appContextEl ? JSON.parse(appContextEl.textContent || "{}") : {};
+  const isAuthenticated = !!appContext.isAuthenticated;
+  const serverProfile = appContext.profile || {};
+
+  const DEFAULTS = {
+    pot: serverProfile.pot ?? 40,
+    watts: serverProfile.watts ?? 200,
+    city: serverProfile.city ?? "",
+  };
   const STORAGE_KEYS = { pot: "pot", watts: "watts", city: "city" };
 
   const dom = {
@@ -46,6 +55,33 @@ document.addEventListener("DOMContentLoaded", () => {
       localStorage.setItem(STORAGE_KEYS.city, city);
     },
   };
+
+  function getCsrfToken() {
+    const cookie = document.cookie.split(";").find((c) => c.trim().startsWith("csrftoken="));
+    if (cookie) return cookie.split("=")[1];
+    const meta = document.querySelector("meta[name='csrf-token']");
+    return meta ? meta.getAttribute("content") : "";
+  }
+
+  async function persistPreferences(pot, watts, city) {
+    storage.saveInputs(pot, watts);
+    storage.saveCity(city);
+
+    if (!isAuthenticated) return;
+
+    try {
+      await fetch("/api/preferences/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": getCsrfToken(),
+        },
+        body: JSON.stringify({ pot, watts, city }),
+      });
+    } catch (err) {
+      console.warn("Konnte Profil nicht speichern:", err);
+    }
+  }
 
   const format = {
     range(min, max, unit) {
@@ -101,7 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     renderResults(pot, watts);
-    storage.saveInputs(pot, watts);
+    persistPreferences(pot, watts, dom.cityInput.value.trim());
   }
 
   function resetDefaults() {
@@ -111,9 +147,16 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function hydrateFromStorage() {
-    dom.potInput.value = storage.number(STORAGE_KEYS.pot, DEFAULTS.pot);
-    dom.wattsInput.value = storage.number(STORAGE_KEYS.watts, DEFAULTS.watts);
-    dom.cityInput.value = storage.text(STORAGE_KEYS.city, "");
+    const pot = isAuthenticated && serverProfile.pot ? serverProfile.pot : storage.number(STORAGE_KEYS.pot, DEFAULTS.pot);
+    const watts =
+      isAuthenticated && serverProfile.watts ? serverProfile.watts : storage.number(STORAGE_KEYS.watts, DEFAULTS.watts);
+    const city = isAuthenticated && typeof serverProfile.city === "string"
+      ? serverProfile.city
+      : storage.text(STORAGE_KEYS.city, DEFAULTS.city || "");
+
+    dom.potInput.value = pot;
+    dom.wattsInput.value = watts;
+    dom.cityInput.value = city;
   }
 
   async function fetchWeather() {
@@ -149,8 +192,9 @@ document.addEventListener("DOMContentLoaded", () => {
       dom.weatherSuggestion.textContent = data.suggestion?.text || "—";
       if (data.suggestion?.tone === "ok") dom.weatherSuggestion.classList.add("tone-success");
       if (data.suggestion?.tone === "warn") dom.weatherSuggestion.classList.add("tone-warning");
+      if (!data.suggestion?.tone) dom.weatherSuggestion.classList.add("tone-success");
 
-      storage.saveCity(city);
+      persistPreferences(readNumber(dom.potInput), readNumber(dom.wattsInput), city);
     } catch (err) {
       dom.weatherStatus.textContent = "Wetterdaten konnten nicht geladen werden.";
       dom.weatherMeta.textContent = err.message || "Unbekannter Fehler";

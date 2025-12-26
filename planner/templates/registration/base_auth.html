@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="de">
+{% load static %}
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Konto{% endblock %}</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{% static 'planner/style.css' %}">
+  <style>
+    .auth-card input { width: 100%; border: 1px solid #e2e8f0; border-radius: 0.5rem; padding: 0.625rem 0.75rem; }
+    .alert-warning { background: #fff7ed; border-color: #fed7aa; color: #92400e; }
+    .alert-info { background: #eff6ff; border-color: #bfdbfe; color: #1d4ed8; }
+    .prompt-inline { background: var(--result-bg); border: 1px solid var(--result-border); color: var(--result-label); padding: 0.5rem 0.75rem; border-radius: 0.5rem; font-size: 0.95rem; }
+    .pass-wrap { position: relative; }
+    .toggle-pass { position: absolute; inset: 0 0.75rem 0 auto; display: grid; place-items: center; color: var(--muted); cursor: pointer; }
+    .toggle-pass:hover { color: var(--primary); }
+    .pass-wrap input { padding-right: 2.5rem; }
+  </style>
+</head>
+<body>
+  <div class="auth-shell">
+    <div class="auth-card card p-4 p-md-5 shadow-lg rounded-4">
+      <h3 class="mb-3 c-primary text-center">{% block header %}{% endblock %}</h3>
+      {% if messages %}
+      <div class="mb-3">
+        {% for message in messages %}
+          <div class="alert alert-info mb-2" role="alert">{{ message }}</div>
+        {% endfor %}
+      </div>
+      {% endif %}
+      {% block content %}{% endblock %}
+      <div class="text-center mt-3">
+        <a href="{% url 'home' %}" class="c-muted small text-decoration-none">← Zurück zum Planer</a>
+      </div>
+    </div>
+  </div>
+</body>
+<script src="{% static 'planner/auth.js' %}"></script>
+</html>
